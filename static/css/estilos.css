@@ -1,0 +1,16 @@
+body {
+    background-color: #0A122A;
+}
+
+.contacts {
+    background-color: yellow;
+    width: 250px;
+}
+
+#chat-log {
+    margin: 5px;
+}
+
+.chat-log {
+    background-color: red;
+}
