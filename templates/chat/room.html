@@ -57,20 +57,20 @@
                 <li class="contact">
                     <div class="wrap">
                         <span class="contact-status online"></span>
-                        <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
+                        <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
                         <div class="meta">
-                            <p class="name">Louis Litt</p>
-                            <p class="preview">You just got LITT up, Mike.</p>
+                            <p class="name">Test</p>
+                            <p class="preview">Hola, Soy Test</p>
                         </div>
                     </div>
                 </li>
                 <li class="contact active">
                     <div class="wrap">
                         <span class="contact-status busy"></span>
-                        <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+                        <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
                         <div class="meta">
                             <p class="name">{{username}}</p>
-                            <p class="preview">Wrong. You take the gun, or you pull out a bigger one. Or, you call their bluff. Or, you do any one of a hundred and forty six other things.</p>
+                            <p class="preview">Hola, Soy admin</p>
                         </div>
                     </div>
                 </li>
@@ -83,7 +83,7 @@
     </div>
     <div class="content">
         <div class="contact-profile">
-            <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+            <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
             <p>{{ username }}</p>
             <div class="social-media">
                 <i class="fa fa-facebook" aria-hidden="true"></i>
@@ -93,22 +93,14 @@
         </div>
         <div class="messages">
             <ul id="chat-log">
-                <li class="sent">
-                    <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
-                    <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
-                </li>
-                <li class="replies">
-                    <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-                    <p>When you're backed against the wall, break the god damn thing down.</p>
-                </li>
 
             </ul>
         </div>
         <div class="message-input">
             <div class="wrap">
-              <input id="chat-message-input" type="text" placeholder="Write your message..." />
+              <input id="chat-message-input" type="text" placeholder="Escribe tu mensaje..." />
               <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-              <button id="chat-message-submit" class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+              <button id="chat-message-submit" type="submit" class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
         </div>
     </div>
@@ -121,8 +113,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
     <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
-        var username = "{{username}}";
+        const roomName = "{{ room_name }}";
+        var username = "{{ username }}";
 
         const chatSocket = new ReconnectingWebSocket(
             'ws://'
@@ -138,7 +130,8 @@
             var author = message['autor'];
 
             var msgListTag = document.createElement('li');
-            var imgTag = document.createElement('p');
+            var pTag = document.createElement('p');
+            var imgTag = document.createElement('img');
 
             pTag.textContent = message.content;
             imgTag.src = 'http://emilcarlsson.se/assets/mikeross.png';
@@ -165,8 +158,10 @@
         };
 
         document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
+            var messageInputDom = document.getElementById("chat-message-input");
+            var message = messageInputDom.value;
+
+            console.log("Message: " + messageInputDom.value)
             chatSocket.send(JSON.stringify({
                 'command': 'new_message',
                 'message': message,
