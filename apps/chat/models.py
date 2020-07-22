@@ -17,6 +17,6 @@ class Message(models.Model):
     def __str__(self):
         return self.author.username
 
-    # Obtener últimos 15 mensajes
-    def last_15_messages():
-        return Message.objects.order_by('-created_at').all()[:15]
+    # Obtener últimos 10 mensajes
+    def last_10_messages():
+        return Message.objects.order_by('-created_at').all()[:10]
